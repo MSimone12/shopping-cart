@@ -3,12 +3,25 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
- Container, AppBar, Toolbar, Typography, IconButton, Badge,
+  Container,
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Badge,
+  Card,
+  Box,
+  Grid,
+  Button,
 } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 
+import { withRouter, Switch, Route } from 'react-router-dom';
 import * as actions from '../actions/products';
 import { Product } from '../types';
+import Routes from '../constants/routes';
+import { ProductsList } from './ProductsList';
+import ProductDetail from './ProductDetail';
 
 const styles = {
   grow: {
@@ -27,38 +40,32 @@ class Root extends Component<RootProps> {
     getProducts();
   }
 
-  render = () => {
-    const { products } = this.props;
-    return (
-      <div>
-        <AppBar position="static">
+  render = () => (
+    <div>
+      <Box mb={5}>
+        <AppBar position="fixed">
           <Toolbar>
             <Typography variant="h6">Loja</Typography>
             <div style={styles.grow} />
             <IconButton color="inherit">
-              <Badge badgeContent={5} color="secondary">
+              <Badge badgeContent={2} color="secondary">
                 <ShoppingCart />
               </Badge>
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Container>
-          {products.map(product => (
-            <Typography variant="h6">{product.title}</Typography>
-          ))}
-        </Container>
-      </div>
-    );
-  }
+      </Box>
+      <Switch>
+        <Route exact path={Routes.ROOT} component={ProductsList} />
+        <Route path={Routes.PRODUCT} component={ProductDetail} />
+      </Switch>
+    </div>
+  )
 }
-
-const mapStateToProps = (state: any) => ({
-  products: state.products.products,
-});
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 
 export default connect(
-  mapStateToProps,
+  () => ({}),
   mapDispatchToProps,
-)(Root);
+)(withRouter(Root));

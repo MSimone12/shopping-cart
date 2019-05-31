@@ -1,5 +1,9 @@
-import { ProductTypes, CartTypes } from '../constants/types';
+import { ProductTypes, CartTypes, GlobalTypes } from '../constants/types';
 import { Product } from '../types';
+
+export const startLoading = () => ({ type: GlobalTypes.START_LOADING });
+
+export const stopLoading = () => ({ type: GlobalTypes.STOP_LOADING });
 
 export const productsReceived = (products: Product[]) => ({
   type: ProductTypes.PRODUCTS_RECEIVED,
