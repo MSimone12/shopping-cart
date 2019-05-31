@@ -16,7 +16,9 @@ import {
 } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 
-import { withRouter, Switch, Route } from 'react-router-dom';
+import {
+ withRouter, Switch, Route, RouteComponentProps,
+} from 'react-router-dom';
 import * as actions from '../actions/products';
 import { Product } from '../types';
 import Routes from '../constants/routes';
@@ -30,15 +32,11 @@ const styles = {
 };
 
 interface RootProps {
-  getProducts(): void
   products: Product[]
 }
 
-class Root extends Component<RootProps> {
-  componentDidMount = () => {
-    const { getProducts } = this.props;
-    getProducts();
-  }
+class Root extends Component<RootProps & RouteComponentProps<{}>, {}> {
+  componentDidMount() {}
 
   render = () => (
     <div>
@@ -65,7 +63,4 @@ class Root extends Component<RootProps> {
 
 const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 
-export default connect(
-  () => ({}),
-  mapDispatchToProps,
-)(withRouter(Root));
+export default withRouter(Root);
