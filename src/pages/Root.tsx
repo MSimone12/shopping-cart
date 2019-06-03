@@ -13,6 +13,7 @@ import Routes from '../constants/routes';
 import ProductsList from './ProductsList';
 import ProductDetail from './ProductDetail';
 import NumberFormatField from '../components/NumberFormatField';
+import Cart from './Cart';
 
 const styles = {
   grow: {
@@ -29,15 +30,18 @@ class Root extends Component<RootProps & RouteComponentProps<{}>, {}> {
   componentDidMount() {}
 
   render = () => {
-    const { cart, totalPrice } = this.props;
+    const { cart, totalPrice, history } = this.props;
     return (
       <div>
         <Box mb={5}>
           <AppBar position="fixed">
             <Toolbar>
+              <IconButton color="inherit" onClick={() => history.push(Routes.ROOT)}>
+
               <Typography variant="h6">Loja</Typography>
+              </IconButton>
               <div style={styles.grow} />
-              <IconButton color="inherit">
+              <IconButton color="inherit" onClick={() => history.push(Routes.CART)}>
                 <Badge badgeContent={cart} color="secondary">
                   <ShoppingCart />
                 </Badge>
@@ -51,6 +55,7 @@ class Root extends Component<RootProps & RouteComponentProps<{}>, {}> {
         <Switch>
           <Route exact path={Routes.ROOT} component={ProductsList} />
           <Route path={Routes.PRODUCT} component={ProductDetail} />
+          <Route path={Routes.CART} component={Cart} />
         </Switch>
       </div>
     );

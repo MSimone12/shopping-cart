@@ -18,3 +18,7 @@ export const productReceived = (product: Product) => ({
 export const addToCart = (product: Product) => ({ type: CartTypes.ADD_TO_CART, product });
 
 export const removeFromCart = (id: number) => ({ type: CartTypes.REMOVE_FROM_CART, id });
+
+export const raiseQuantity = (id: number) => ({ type: CartTypes.RAISE_QUANTITY, id });
+
+export const reduceQuantity = (id: number) => ({ type: CartTypes.REDUCE_QUANTITY, id });

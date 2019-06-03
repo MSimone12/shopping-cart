@@ -5,7 +5,9 @@ export enum ProductTypes {
 
 export enum CartTypes {
   ADD_TO_CART = 'add_to_cart',
-  REMOVE_FROM_CART = 'remove_from_cart'
+  REMOVE_FROM_CART = 'remove_from_cart',
+  RAISE_QUANTITY = 'raise_quantity',
+  REDUCE_QUANTITY = 'reduce_quantity'
 }
 
 export enum GlobalTypes {

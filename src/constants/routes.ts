@@ -1,6 +1,7 @@
 enum Routes {
   ROOT = '/',
-  PRODUCT = '/:id'
+  PRODUCT = '/product/:id',
+  CART = '/cart'
 }
 
 export default Routes;

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import {
  Container, Typography, Card, Box, Grid, Button,
 } from '@material-ui/core';
-import { ArrowRight } from '@material-ui/icons';
+import { KeyboardArrowRightRounded } from '@material-ui/icons';
 import { RouteComponentProps } from 'react-router-dom';
 import NumberFormatField from '../components/NumberFormatField';
 
@@ -15,7 +15,7 @@ import * as actions from '../actions/products';
 interface Props {
   products: Product[]
   getProducts(): void
-  getProductbyId(id: number): void
+  getProductById(id: number): void
 }
 
 class ProductsList extends Component<Props & RouteComponentProps<{}>> {
@@ -25,9 +25,9 @@ class ProductsList extends Component<Props & RouteComponentProps<{}>> {
   }
 
   getProduct = (id: number) => {
-    const { getProductbyId, history } = this.props;
-    getProductbyId(id);
-    history.push(`/${id}`);
+    const { getProductById, history } = this.props;
+    getProductById(id);
+    history.push(`/product/${id}`);
   }
 
   render() {
@@ -60,14 +60,16 @@ class ProductsList extends Component<Props & RouteComponentProps<{}>> {
                           </Grid>
                         </Grid>
                         <Grid item xs={2}>
-                          <Button
-                            onClick={() => this.getProduct(product.id)}
-                            size="large"
-                            fullWidth
-                            color="secondary"
-                          >
-                            <ArrowRight />
-                          </Button>
+                          <Grid container direction="column" alignItems="center" justify="center">
+                            <Button
+                              onClick={() => this.getProduct(product.id)}
+                              size="large"
+                              fullWidth
+                              color="secondary"
+                            >
+                              <KeyboardArrowRightRounded />
+                            </Button>
+                          </Grid>
                         </Grid>
                       </Grid>
                     </Box>
