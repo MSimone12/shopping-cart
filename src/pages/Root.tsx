@@ -1,29 +1,18 @@
 /* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
 import {
-  Container,
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  Badge,
-  Card,
-  Box,
-  Grid,
-  Button,
+ AppBar, Toolbar, Typography, IconButton, Badge, Box,
 } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 
 import {
  withRouter, Switch, Route, RouteComponentProps,
 } from 'react-router-dom';
-import * as actions from '../actions/products';
-import { Product } from '../types';
 import Routes from '../constants/routes';
-import { ProductsList } from './ProductsList';
+import ProductsList from './ProductsList';
 import ProductDetail from './ProductDetail';
+import NumberFormatField from '../components/NumberFormatField';
 
 const styles = {
   grow: {
@@ -32,35 +21,45 @@ const styles = {
 };
 
 interface RootProps {
-  products: Product[]
+  cart: number
+  totalPrice: number
 }
 
 class Root extends Component<RootProps & RouteComponentProps<{}>, {}> {
   componentDidMount() {}
 
-  render = () => (
-    <div>
-      <Box mb={5}>
-        <AppBar position="fixed">
-          <Toolbar>
-            <Typography variant="h6">Loja</Typography>
-            <div style={styles.grow} />
-            <IconButton color="inherit">
-              <Badge badgeContent={2} color="secondary">
-                <ShoppingCart />
-              </Badge>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      </Box>
-      <Switch>
-        <Route exact path={Routes.ROOT} component={ProductsList} />
-        <Route path={Routes.PRODUCT} component={ProductDetail} />
-      </Switch>
-    </div>
-  )
+  render = () => {
+    const { cart, totalPrice } = this.props;
+    return (
+      <div>
+        <Box mb={5}>
+          <AppBar position="fixed">
+            <Toolbar>
+              <Typography variant="h6">Loja</Typography>
+              <div style={styles.grow} />
+              <IconButton color="inherit">
+                <Badge badgeContent={cart} color="secondary">
+                  <ShoppingCart />
+                </Badge>
+              </IconButton>
+              <Box p={2}>
+                <NumberFormatField displayType="text" value={totalPrice} />
+              </Box>
+            </Toolbar>
+          </AppBar>
+        </Box>
+        <Switch>
+          <Route exact path={Routes.ROOT} component={ProductsList} />
+          <Route path={Routes.PRODUCT} component={ProductDetail} />
+        </Switch>
+      </div>
+    );
+  }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
+const mapStateToProps = (state: any) => ({
+  cart: state.cart.products.length,
+  totalPrice: state.cart.totalValue,
+});
 
-export default withRouter(Root);
+export default withRouter(connect(mapStateToProps)(Root));

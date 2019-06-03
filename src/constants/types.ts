@@ -1,5 +1,6 @@
 export enum ProductTypes {
-  PRODUCTS_RECEIVED = 'products_received'
+  PRODUCTS_RECEIVED = 'products_received',
+  PRODUCT_RECEIVED = 'product_received'
 }
 
 export enum CartTypes {

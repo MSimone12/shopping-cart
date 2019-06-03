@@ -1,18 +1,34 @@
 import React, { Component } from 'react';
+import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
 import {
  Container, Typography, Card, Box, Grid, Button,
 } from '@material-ui/core';
+import { ArrowRight } from '@material-ui/icons';
+import { RouteComponentProps } from 'react-router-dom';
 import NumberFormatField from '../components/NumberFormatField';
+
 import { Product } from '../types';
+import * as actions from '../actions/products';
 
 interface Props {
   products: Product[]
+  getProducts(): void
+  getProductbyId(id: number): void
 }
 
-export class ProductsList extends Component<Props> {
-  componentDidMount() {}
+class ProductsList extends Component<Props & RouteComponentProps<{}>> {
+  componentDidMount() {
+    const { getProducts } = this.props;
+    getProducts();
+  }
+
+  getProduct = (id: number) => {
+    const { getProductbyId, history } = this.props;
+    getProductbyId(id);
+    history.push(`/${id}`);
+  }
 
   render() {
     const { products } = this.props;
@@ -20,9 +36,9 @@ export class ProductsList extends Component<Props> {
       <Container>
         <Box pt={5}>
           <Grid container direction="column" spacing={3}>
-            {products.map((product: Product) => (
-              <Button key={product.id}>
-                <Grid item xs>
+            {products
+              && products.map((product: Product) => (
+                <Grid item xs key={product.id}>
                   <Card raised style={{ minWidth: '100%', textAlign: 'initial' }}>
                     <Box p={5}>
                       <Grid container>
@@ -43,12 +59,21 @@ export class ProductsList extends Component<Props> {
                             </Grid>
                           </Grid>
                         </Grid>
+                        <Grid item xs={2}>
+                          <Button
+                            onClick={() => this.getProduct(product.id)}
+                            size="large"
+                            fullWidth
+                            color="secondary"
+                          >
+                            <ArrowRight />
+                          </Button>
+                        </Grid>
                       </Grid>
                     </Box>
                   </Card>
                 </Grid>
-              </Button>
-            ))}
+              ))}
           </Grid>
         </Box>
       </Container>
@@ -56,9 +81,11 @@ export class ProductsList extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = (state: any) => ({
+  products: state.products.products,
+});
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(actions, dispatch);
 
 export default connect(
   mapStateToProps,

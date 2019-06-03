@@ -9,7 +9,7 @@ const initialState: CartState = {
 
 const reducer: Reducer<CartState> = (state = initialState, action) => {
   const { product } = action;
-  // const productIndex: number = state.products.indexOf(prod => prod.id === id);
+  // const productIndex: number = state.products.indexOf(prod => prod.id == id);
   switch (action.type) {
     case CartTypes.ADD_TO_CART:
       return {

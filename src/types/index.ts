@@ -21,4 +21,5 @@ export interface CartState {
 
 export interface ProductsState {
   products: Product[]
+  product: Product | null
 }
