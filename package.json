@@ -13,7 +13,7 @@
     "@types/react-dom": "16.8.4",
     "@types/react-router-dom": "^4.3.3",
     "@types/redux-logger": "^3.0.7",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "history": "^4.9.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
